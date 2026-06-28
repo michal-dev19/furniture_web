@@ -47,3 +47,17 @@ def get_items(db=Depends(get_db)):
         return list_of_rows
     except sqlite3.Error:
         raise HTTPException(status_code=500, detail="Internal Server Error")
+
+
+# return specific item data to Javascript
+@app.get("/api/items/{id}")
+def get_item(id, db=Depends(get_db)):
+    conn, cursor = db
+    try:
+        cursor.execute("SELECT * FROM items WHERE id=?", (id,))
+        row = cursor.fetchone()
+        if row is None:
+            raise HTTPException(status_code=404, detail="Item Not Found")
+        return dict(row)
+    except sqlite3.Error:
+        raise HTTPException(status_code=500, detail="Internal Server Error")
