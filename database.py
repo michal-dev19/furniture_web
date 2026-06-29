@@ -42,6 +42,7 @@ def init_db():
             customer_name TEXT,
             customer_email TEXT,
             customer_phone TEXT,
+            customer_message TEXT,
             status TEXT,
             created_at INT,
             order_id INT,
